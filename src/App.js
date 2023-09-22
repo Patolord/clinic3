@@ -11,6 +11,7 @@ import Patient from "./pages/patient/Patient";
 import Signup from "./pages/signup/Signup";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import AllUsers from "./components/AllUsers";
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -45,6 +46,7 @@ function App() {
               </Route>
             </Switch>
           </div>
+          {user && <AllUsers />}
         </BrowserRouter>
       )}
     </div>
