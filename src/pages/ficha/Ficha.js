@@ -4,6 +4,7 @@ import { useDocument } from "../../hooks/useDocument";
 // styles
 import "./Ficha.css";
 import FichaResumo from "./FichaResumo";
+import Comentarios from "./Comentarios";
 
 export default function Ficha() {
   const { id } = useParams();
@@ -19,6 +20,7 @@ export default function Ficha() {
   return (
     <div className="project-details">
       <FichaResumo ficha={document} />
+      <Comentarios />
     </div>
   );
 }
