@@ -27,7 +27,7 @@ export default function Form() {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState([]);
   const [assignedUsers, setAssignedUsers] = useState([]);
   const [formError, setFormError] = useState(null);
 
@@ -46,7 +46,7 @@ export default function Form() {
     e.preventDefault();
     setFormError(null);
 
-    if (!category) {
+    if (category.length < 1) {
       setFormError("Please select a project category.");
       return;
     }
@@ -61,6 +61,9 @@ export default function Form() {
         id: u.value.id,
       };
     });
+
+    const categoriesList = category.map((c) => c.value);
+
     const createdBy = {
       displayName: user.displayName,
       id: user.uid,
@@ -71,7 +74,7 @@ export default function Form() {
       details,
       assignedUsersList,
       createdBy,
-      category: category.value,
+      categoriesList,
       dueDate: timestamp.fromDate(new Date(dueDate)),
       comments: [],
     };
