@@ -7,7 +7,7 @@ import "./App.css";
 import Listings from "./pages/listings/Listings";
 import Form from "./pages/form/Form";
 import Login from "./pages/login/Login";
-import Patient from "./pages/patient/Patient";
+import Ficha from "./pages/ficha/Ficha";
 import Signup from "./pages/signup/Signup";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -32,9 +32,9 @@ function App() {
                 {!user && <Redirect to="/login" />}
                 {user && <Form />}
               </Route>
-              <Route path="/patients/:id">
+              <Route path="/fichas/:id">
                 {!user && <Redirect to="/login" />}
-                {user && <Patient />}
+                {user && <Ficha />}
               </Route>
               <Route path="/login">
                 {user && <Redirect to="/" />}
