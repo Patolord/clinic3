@@ -16,7 +16,7 @@ export default function Navbar() {
         {!user && (
           <>
             <li className="logo">
-              <img src={Logo} alt="loho" />{" "}
+              <img src={Logo} alt="loho" />
             </li>
 
             <li>
