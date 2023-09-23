@@ -1,0 +1,41 @@
+/* Styles for the main container */
+.intro {
+  display: flex; /* Using flexbox to position child elements side by side */
+  justify-content: space-between; /* This ensures that the two boxes will touch each other */
+  align-items: center; /* If you want the boxes to be vertically centered in the container */
+  width: 100%; /* Adjust this based on your needs */
+  max-width: 1200px; /* Example maximum width for the container, adjust as necessary */
+  margin: 0 auto; /* Centers the container in the middle of the page */
+}
+
+/* Previous styles remain the same, but the .left-box gets modified: */
+
+.left {
+  flex: 1; /* Takes up 50% of the container's width */
+  height: 375px; /* Adjust based on your needs */
+
+  border-right: none; /* No border on the right side to make sure it touches the right box */
+
+  /* New styles for the image */
+  background-image: url("../../assets/intro.png"); /* Replace with the path to your image */
+  background-size: stretch; /* Ensure the image covers the entire box */
+  background-position: right; /* Center the image */
+  background-repeat: no-repeat; /* Make sure the image doesn't repeat */
+}
+
+/* Styles for the right box */
+.right {
+  flex: 1; /* Takes up 50% of the container's width */
+  height: auto; /* Adjust based on your needs */
+
+  border-left: none; /* No border on the left side to make sure it touches the left box */
+}
+
+.login-form {
+  max-width: 360px;
+  margin: 0;
+  padding: 40px;
+  border: 1px solid #ddd;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.05);
+  background: #fff;
+}
