@@ -63,7 +63,6 @@ export default function Form() {
     });
     const createdBy = {
       displayName: user.displayName,
-      photoURL: user.photoURL,
       id: user.uid,
     };
 
@@ -118,6 +117,7 @@ export default function Form() {
           <Select
             onChange={(option) => setCategory(option)}
             options={categories}
+            isMulti
           />
         </label>
         <label>
