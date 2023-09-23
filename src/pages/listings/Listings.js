@@ -13,7 +13,7 @@ export default function Listings() {
     <div>
       <h2 className="page-title">Fichas</h2>
       {error && <p className="error">{error}</p>}
-      {documents && <Fichas projects={documents} />}
+      {documents && <Fichas fichas={documents} />}
     </div>
   );
 }

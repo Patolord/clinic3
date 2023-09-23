@@ -10,10 +10,10 @@ import Select from "react-select";
 import "./Form.css";
 
 const categories = [
-  { value: "development", label: "Development" },
-  { value: "design", label: "Design" },
-  { value: "sales", label: "Sales" },
-  { value: "marketing", label: "Marketing" },
+  { value: "dores nas costas", label: "dores nas costas" },
+  { value: "mal estar", label: "mal estar" },
+  { value: "diabetes", label: "diabetes" },
+  { value: "dor de cabeca", label: "dor de cabeca" },
 ];
 
 export default function Form() {
@@ -28,7 +28,7 @@ export default function Form() {
   const [details, setDetails] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [category, setCategory] = useState([]);
-  const [assignedUsers, setAssignedUsers] = useState([]);
+  const [assignedUsers, setAssignedUsers] = useState("");
   const [formError, setFormError] = useState(null);
 
   // create user values for react-select
@@ -50,17 +50,10 @@ export default function Form() {
       setFormError("Please select a project category.");
       return;
     }
-    if (assignedUsers.length < 1) {
+    if (!assignedUsers) {
       setFormError("Please assign the project to at least 1 user");
       return;
     }
-
-    const assignedUsersList = assignedUsers.map((u) => {
-      return {
-        displayName: u.value.displayName,
-        id: u.value.id,
-      };
-    });
 
     const categoriesList = category.map((c) => c.value);
 
@@ -72,7 +65,7 @@ export default function Form() {
     const project = {
       name,
       details,
-      assignedUsersList,
+      assignedUsers: assignedUsers.value,
       createdBy,
       categoriesList,
       dueDate: timestamp.fromDate(new Date(dueDate)),
@@ -87,10 +80,10 @@ export default function Form() {
 
   return (
     <div className="create-form">
-      <h2 className="page-title">Create a new Project</h2>
+      <h2 className="page-title">Criar nova ficha:</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          <span>Project name:</span>
+          <span>Nome Completo:</span>
           <input
             required
             type="text"
@@ -99,7 +92,7 @@ export default function Form() {
           />
         </label>
         <label>
-          <span>Project Details:</span>
+          <span>Detalhes:</span>
           <textarea
             required
             onChange={(e) => setDetails(e.target.value)}
@@ -107,7 +100,7 @@ export default function Form() {
           ></textarea>
         </label>
         <label>
-          <span>Set due date:</span>
+          <span>Data:</span>
           <input
             required
             type="date"
@@ -116,7 +109,7 @@ export default function Form() {
           />
         </label>
         <label>
-          <span>Project category:</span>
+          <span>Categoria:</span>
           <Select
             onChange={(option) => setCategory(option)}
             options={categories}
@@ -124,15 +117,14 @@ export default function Form() {
           />
         </label>
         <label>
-          <span>Assign to:</span>
+          <span>Paciente:</span>
           <Select
             onChange={(option) => setAssignedUsers(option)}
             options={users}
-            isMulti
           />
         </label>
 
-        <button className="btn">Add Project</button>
+        <button className="btn">Adicionar Ficha</button>
 
         {formError && <p className="error">{formError}</p>}
       </form>

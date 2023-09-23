@@ -3,19 +3,17 @@ import { Link } from "react-router-dom";
 // styles
 import "./Fichas.css";
 
-export default function Fichas({ projects }) {
-  console.log(projects);
-
+export default function Fichas({ fichas }) {
   return (
     <div className="fichas">
-      {projects.length === 0 && <p>No projects yet!</p>}
-      {projects.map((project) => (
-        <Link to={`/projects/${project.id}`} key={project.id}>
-          <h4>{project.createdBy.displayName}</h4>
-          <p>{project.dueDate.toDate().toDateString()}</p>
+      {fichas.length === 0 && <p>Nenhuma ficha</p>}
+      {fichas.map((ficha) => (
+        <Link to={`/fichas/${ficha.id}`} key={ficha.id}>
+          <h4>{ficha.assignedUsers.displayName}</h4>
+          <p>{ficha.dueDate.toDate().toDateString()}</p>
           <div className="assigned-to">
             <ul>
-              {project.categoriesList.map((c) => (
+              {ficha.categoriesList.map((c) => (
                 <li key={c}>{c}</li>
               ))}
             </ul>
