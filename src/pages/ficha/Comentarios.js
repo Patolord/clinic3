@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { timestamp } from "../../firebase/config";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useFirestore } from "../../hooks/useFirestore";
+//import { formatDistanceToNow } from "date-fns";
 
-export default function Comentarios() {
+export default function Comentarios({ ficha }) {
   const { user } = useAuthContext();
   const [newComment, setNewComment] = useState("");
+  const { updateDocument, response } = useFirestore("fichas");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,12 +18,34 @@ export default function Comentarios() {
       createdAt: timestamp.fromDate(new Date()),
       id: Math.random(),
     };
-    console.log(commentToAdd);
+    await updateDocument(ficha.id, {
+      comments: [...ficha.comments, commentToAdd],
+    });
+    if (!response.error) {
+      setNewComment("");
+    }
   };
 
   return (
     <div className="project-comments">
       <h4>Comentários</h4>
+
+      <ul>
+        {ficha.comments.length > 0 &&
+          ficha.comments.map((comment) => (
+            <li key={comment.id}>
+              <div className="comment-author">
+                <p>{comment.displayName}</p>
+              </div>
+              <div className="comment-date">
+                <p>{comment.createdAt.toDate().toLocaleString("pt-BR")}</p>
+              </div>
+              <div className="comment-content">
+                <p>{comment.content}</p>
+              </div>
+            </li>
+          ))}
+      </ul>
 
       <form className="add-comment" onSubmit={handleSubmit}>
         <label>

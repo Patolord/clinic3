@@ -20,7 +20,7 @@ export default function Ficha() {
   return (
     <div className="project-details">
       <FichaResumo ficha={document} />
-      <Comentarios />
+      <Comentarios ficha={document} />
     </div>
   );
 }

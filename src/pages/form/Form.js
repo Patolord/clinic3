@@ -113,6 +113,7 @@ export default function Form() {
           <Select
             onChange={(option) => setCategory(option)}
             options={categories}
+            placeholder="Selecionar"
             isMulti
           />
         </label>
@@ -121,6 +122,7 @@ export default function Form() {
           <Select
             onChange={(option) => setAssignedUsers(option)}
             options={users}
+            placeholder="Selecionar"
           />
         </label>
 

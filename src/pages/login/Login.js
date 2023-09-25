@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 
-import img from "../../assets/intro.png";
-
 // styles
 import "./Login.css";
 
@@ -18,9 +16,7 @@ export default function Login() {
 
   return (
     <div className="intro">
-      <div className="left">
-        {/* <img className="img" src={img} alt="site"></img> */}
-      </div>
+      <div className="left"></div>
       <div className="right">
         <form onSubmit={handleSubmit} className="login-form">
           <h2>Entrar</h2>
