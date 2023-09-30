@@ -74,7 +74,7 @@ export default function Form() {
 
     await addDocument(project);
     if (!response.error) {
-      history.push("/");
+      history.push("/fichas");
     }
   };
 
