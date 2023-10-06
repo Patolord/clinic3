@@ -10,6 +10,7 @@ import Login from "./pages/login/Login";
 import Ficha from "./pages/ficha/Ficha";
 import Signup from "./pages/signup/Signup";
 import Navbar from "./components/Navbar";
+import Success from "./pages/success/Success";
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -28,6 +29,10 @@ function App() {
               <Route path="/form">
                 {!user && <Redirect to="/login" />}
                 {user && <Form />}
+              </Route>
+              <Route path="/success">
+                {!user && <Redirect to="/login" />}
+                {user && <Success />}
               </Route>
               <Route exact path="/fichas">
                 {!user && <Redirect to="/login" />}
