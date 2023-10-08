@@ -6,6 +6,7 @@ import "./App.css";
 
 import Listings from "./pages/listings/Listings";
 import Form from "./pages/form/Form";
+import Form2 from "./pages/form2/Form2";
 import Login from "./pages/login/Login";
 import Ficha from "./pages/ficha/Ficha";
 import Signup from "./pages/signup/Signup";
@@ -29,6 +30,9 @@ function App() {
               <Route path="/form">
                 {!user && <Redirect to="/login" />}
                 {user && <Form />}
+              </Route>
+              <Route path="/form2">
+                <Form2 />
               </Route>
               <Route path="/success">
                 {!user && <Redirect to="/login" />}
