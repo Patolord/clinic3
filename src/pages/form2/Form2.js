@@ -1,10 +1,15 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+
 import Costas from "../../assets/costas.svg";
 import Frente from "../../assets/frente.svg";
-
 import "./Form2.css";
 
 export default function Form2() {
+  const [peito, setPeito] = useState([]);
+  const [on, setOn] = useState(false);
+  const [fillColor, setFillColor] = useState("none");
+
   const {
     register,
     handleSubmit,
@@ -14,14 +19,13 @@ export default function Form2() {
 
   const onSubmit = (data) => console.log(data);
 
-  console.log(watch("sobrenome")); // watch input value by passing the name of it
+  //console.log(watch("sobrenome")); // watch input value by passing the name of it
 
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
 
     <div className="create-form">
       <h2 className="page-title">Criar nova ficha:</h2>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="secao1">
           <div className="left-col">Contato</div>
@@ -110,7 +114,7 @@ export default function Form2() {
         </div>
         <div className="secao4">
           <div className="left-col-4">Dados Médicos</div>
-          <div class="right-col-4">
+          <div className="right-col-4">
             <label>
               <input {...register("Indicado por")} type="radio" value="Amigo" />
               Amigo
@@ -139,7 +143,7 @@ export default function Form2() {
         </div>
         <div className="secao5">
           <div className="left-col-5">Dados Médicos</div>
-          <div class="right-col-5">
+          <div className="right-col-5">
             <label>
               <input
                 type="checkbox"
@@ -200,21 +204,38 @@ export default function Form2() {
         </div>
         <div className="secao6">
           <div className="left-col-6">Local da Dor</div>
-          <div class="right-col-6">
+          <div className="right-col-6">
             <svg
               className="svg1"
               width="44"
               height="74"
               viewBox="0 0 44 74"
-              fill="none"
+              fill={fillColor}
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M1 43.0845L19.9 73C21.475 71.9859 29.875 38.5211 29.875 32.9437C29.875 28.4817 38.625 27.3662 43 27.3662C42.125 24.662 39.85 18.138 37.75 13.6761C35.65 9.21408 18.675 3.3662 10.45 1L3.625 2.52113L1 43.0845Z"
-                stroke="black"
-              />
+              <a
+                href="/#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOn(!on);
+                  if (!on) {
+                    setPeito([...peito, "Peito"]);
+                    setFillColor("red");
+                  } else {
+                    setPeito(peito.filter((item) => item !== "Peito"));
+                    setFillColor("none");
+                  }
+                }}
+              >
+                <path
+                  d="M1 43.0845L19.9 73C21.475 71.9859 29.875 38.5211 29.875 32.9437C29.875 28.4817 38.625 27.3662 43 27.3662C42.125 24.662 39.85 18.138 37.75 13.6761C35.65 9.21408 18.675 3.3662 10.45 1L3.625 2.52113L1 43.0845Z"
+                  stroke="black"
+                />
+              </a>
             </svg>
+
             <img className="frente" src={Frente} alt="frente" />
+            <div className="items">{peito}</div>
           </div>
         </div>
         <input type="submit" />

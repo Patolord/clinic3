@@ -102,10 +102,18 @@
 
 .right-col-6 {
   position: relative;
+  display: flex;
+  gap: 2em;
+  align-items: start;
+  flex-basis: 100%;
 }
 
 .frente {
   height: 360px;
+}
+
+.items {
+  margin-top: 10px;
 }
 
 .svg1 {
@@ -114,6 +122,8 @@
   left: 70px;
 }
 
-.svg1:hover {
-  fill: red;
+.svg1:hover,
+.svg1:focus,
+.svg1:active {
+  fill: red !important;
 }
