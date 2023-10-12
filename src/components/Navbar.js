@@ -13,21 +13,25 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <ul>
-        {!user && (
-          <>
-            <li className="logo">
-              <img src={Logo} alt="loho" />
-            </li>
+        <>
+          <li className="logo">
+            <img src={Logo} alt="loho" />
+            {user && <p>Olá {user?.displayName}</p>}
+          </li>
 
+          {!user && (
             <li>
               <Link to="/login">Entrar</Link>
             </li>
+          )}
 
+          {user && (
             <li>
-              <Link to="/signup">Cadastrar</Link>
+              <Link to="/fichas">Fichas</Link>
             </li>
-          </>
-        )}
+          )}
+        </>
+
         {user && (
           <li>
             {!isPending && (

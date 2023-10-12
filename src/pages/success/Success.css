@@ -1,0 +1,15 @@
+.container2 {
+  display: grid;
+  grid-template-rows: 7fr 3fr;
+  align-items: center;
+  justify-items: center;
+}
+
+img.like {
+  height: 70px;
+  width: 70px;
+  margin-right: 10px;
+  width: 100%;
+  margin-top: 10px;
+  color: #41678b;
+}
