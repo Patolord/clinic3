@@ -54,7 +54,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: first baseline;
-  gap: 4.4em;
+  gap: 3em;
 }
 
 .secao4 {
@@ -63,7 +63,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: first baseline;
-  gap: 7em;
+  gap: 4em;
 }
 
 .left-col-4 {
@@ -81,7 +81,7 @@
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
   align-items: first baseline;
-  gap: 2em;
+  gap: 3em;
 }
 
 .left-col-5 {
@@ -120,7 +120,9 @@
   margin-top: 20px;
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
-  gap: 7em;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2em;
 }
 
 .left-col-6 {
@@ -132,7 +134,6 @@
   display: flex;
   gap: 2em;
   align-items: flex-start;
-  flex-basis: 100%;
 }
 
 textarea {

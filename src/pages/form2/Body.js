@@ -5,7 +5,7 @@ import "./Body.css";
 
 export default function Body({ handleBodyClick, fillColors }) {
   return (
-    <>
+    <div className="right-col-6">
       <a
         href="/#"
         onClick={(e) => {
@@ -49,6 +49,6 @@ export default function Body({ handleBodyClick, fillColors }) {
       </a>
       <img className="frente" src={Frente} alt="frente" />
       <img className="costas" src={Costas} alt="costas" />
-    </>
+    </div>
   );
 }

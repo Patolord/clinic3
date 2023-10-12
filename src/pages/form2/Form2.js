@@ -64,10 +64,9 @@ export default function Form2() {
     });
   };
 
-  console.log(pains);
-  console.log(errors);
-
-  const onSubmit = (data) => {};
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   //console.log(watch("sobrenome")); // watch input value by passing the name of it
 
@@ -87,49 +86,42 @@ export default function Form2() {
               </label>
               <label>
                 <span> Email</span>
-                <input type="email" {...register("Email", {})} />
+                <input type="email" {...register("dadosPessoais.email", {})} />
               </label>
               <label>
                 <span> Telefone</span>
-                <input
-                  type="tel"
-                  placeholder="(DDD) + Número"
-                  {...register("Telefone", {})}
-                />
+                <input type="tel" {...register("dadosPessoais.telefone", {})} />
               </label>
               <label>
                 <span> CPF</span>
-                <input
-                  type="number"
-                  placeholder="000.000.000-00"
-                  {...register("CPF", {})}
-                />
+                <input type="text" {...register("dadosPessoais.CPF", {})} />
               </label>
             </div>
             <div className="right-col-1-in">
               <label>
                 <span> Data de Nascimento</span>
                 <input
-                  type="datetime"
-                  placeholder="DD/MM/AAAA"
-                  {...register("Data de Nascimento", {})}
+                  type="date"
+                  {...register("dadosPessoais.aniversario", {})}
                 />
               </label>
               <label>
                 <span> Idade</span>
-                <input type="number" {...register("Idade", {})} />
+                <input
+                  type="number"
+                  {...register("dadosPessoais.idade", { min: 0 })}
+                />
               </label>
               <label>
                 <span> Ocupação</span>
-                <input type="text" {...register("Ocupação", {})} />
+                <input
+                  type="text"
+                  {...register("dadosPessoais.ocupação", {})}
+                />
               </label>
               <label>
                 <span> Celular</span>
-                <input
-                  type="tel"
-                  placeholder="(DDD) + Número"
-                  {...register("Celular", {})}
-                />
+                <input type="tel" {...register("dadosPessoais.celular", {})} />
               </label>
             </div>
           </div>
@@ -141,16 +133,16 @@ export default function Form2() {
             <div className="left-col-2-in">
               <label>
                 <span> Endereço</span>
-                <input type="text" {...register("Endereço", {})} />
+                <input type="text" {...register("endereco.endereco", {})} />
               </label>
 
               <label>
                 <span> Cidade</span>
-                <input type="text" {...register("Cidade", {})} />
+                <input type="text" {...register("endereco.cidade", {})} />
               </label>
               <label>
                 <span> Estado</span>
-                <select {...register("Estado")}>
+                <select {...register("endereco.estado")}>
                   <option value="SP">SP</option>
                   <option value="RJ">RJ</option>
                   <option value="MG">MG</option>
@@ -163,11 +155,11 @@ export default function Form2() {
             <div className="right-col-2-in">
               <label>
                 <span> CEP</span>
-                <input type="number" {...register("CEP", {})} />
+                <input type="number" {...register("endereco.cep", {})} />
               </label>
               <label>
                 <span> Bairro</span>
-                <input type="text" {...register("Bairro", {})} />
+                <input type="text" {...register("endereco.bairro", {})} />
               </label>
             </div>
           </div>
@@ -214,8 +206,9 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
+                  value="Dor de Cabeça"
                   placeholder="Dor de Cabeça"
-                  {...register("Dor de Cabeça", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 Dor de Cabeça
               </label>
@@ -224,8 +217,9 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
+                  value="Dor nas Costas"
                   placeholder="Dor nas Costas"
-                  {...register("Dor nas Costas", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 Dor nas Costas
               </label>
@@ -234,8 +228,9 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
+                  value="Dificuldade de Aprendizado"
                   placeholder="Dificuldade de Aprendizado"
-                  {...register("Dificuldade de Aprendizado", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 Dificuldade de Aprendizado
               </label>
@@ -245,7 +240,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="Falta de Concentração"
-                  {...register("Falta de Concentração", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 Falta de Concentração
               </label>
@@ -255,7 +250,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="Diabetes"
-                  {...register("Diabetes", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 Diabetes
               </label>
@@ -265,7 +260,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="Problemas digestivos"
-                  {...register("Problemas digestivos", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 Problemas digestivos
               </label>
@@ -275,20 +270,28 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="Tontura"
-                  {...register("Tontura", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 Tontura
               </label>
             </div>
             <div className="campo">
               <label>
-                <input type="checkbox" placeholder="8" {...register("8", {})} />
+                <input
+                  type="checkbox"
+                  placeholder="8"
+                  {...register("Dor", { valueasArray: true })}
+                />
                 8
               </label>
             </div>
             <div className="campo">
               <label>
-                <input type="checkbox" placeholder="9" {...register("9", {})} />
+                <input
+                  type="checkbox"
+                  placeholder="9"
+                  {...register("Dor", { valueasArray: true })}
+                />
                 9
               </label>
             </div>
@@ -297,7 +300,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="10"
-                  {...register("10", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 10
               </label>
@@ -307,7 +310,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="11"
-                  {...register("11", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 11
               </label>
@@ -317,7 +320,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="12"
-                  {...register("12", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 12
               </label>
@@ -327,7 +330,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="13"
-                  {...register("13", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 13
               </label>
@@ -337,7 +340,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="14"
-                  {...register("14", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 14
               </label>
@@ -347,7 +350,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="15"
-                  {...register("15", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 15
               </label>
@@ -357,7 +360,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="16"
-                  {...register("16", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 16
               </label>
@@ -367,7 +370,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="17"
-                  {...register("17", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 17
               </label>
@@ -377,7 +380,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="18"
-                  {...register("18", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 18
               </label>
@@ -387,7 +390,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="19"
-                  {...register("19", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 19
               </label>
@@ -397,7 +400,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="20"
-                  {...register("20", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 20
               </label>
@@ -407,7 +410,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="21"
-                  {...register("21", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 21
               </label>
@@ -417,7 +420,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="22"
-                  {...register("22", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 22
               </label>
@@ -427,7 +430,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="23"
-                  {...register("23", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 23
               </label>
@@ -437,7 +440,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="24"
-                  {...register("24", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 24
               </label>
@@ -447,7 +450,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="25"
-                  {...register("25", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 25
               </label>
@@ -457,7 +460,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="26"
-                  {...register("26", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 26
               </label>
@@ -467,7 +470,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="27"
-                  {...register("27", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 27
               </label>
@@ -477,7 +480,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="28"
-                  {...register("28", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 28
               </label>
@@ -486,8 +489,7 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
-                  placeholder="29"
-                  {...register("29", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 29
               </label>
@@ -496,8 +498,7 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
-                  placeholder="30"
-                  {...register("30", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 30
               </label>
@@ -506,8 +507,7 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
-                  placeholder="31"
-                  {...register("31", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 31
               </label>
@@ -516,8 +516,7 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
-                  placeholder="32"
-                  {...register("32", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 32
               </label>
@@ -526,8 +525,7 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
-                  placeholder="33"
-                  {...register("33", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 33
               </label>
@@ -536,8 +534,7 @@ export default function Form2() {
               <label>
                 <input
                   type="checkbox"
-                  placeholder="34"
-                  {...register("34", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 34
               </label>
@@ -547,7 +544,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="35"
-                  {...register("35", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 35
               </label>
@@ -557,7 +554,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="36"
-                  {...register("36", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 36
               </label>
@@ -567,7 +564,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="37"
-                  {...register("37", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 37
               </label>
@@ -577,7 +574,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="38"
-                  {...register("38", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 38
               </label>
@@ -587,7 +584,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="39"
-                  {...register("39", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 39
               </label>
@@ -597,7 +594,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="40"
-                  {...register("40", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 40
               </label>
@@ -607,7 +604,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="41"
-                  {...register("41", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 41
               </label>
@@ -617,7 +614,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="42"
-                  {...register("42", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 42
               </label>
@@ -627,7 +624,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="43"
-                  {...register("43", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 43
               </label>
@@ -637,7 +634,7 @@ export default function Form2() {
                 <input
                   type="checkbox"
                   placeholder="44"
-                  {...register("44", {})}
+                  {...register("Dor", { valueasArray: true })}
                 />
                 44
               </label>
@@ -646,9 +643,7 @@ export default function Form2() {
         </div>
         <div className="secao6">
           <div className="left-col-6">Local da Dor</div>
-          <div className="right-col-6">
-            <Body handleBodyClick={handleBodyClick} fillColors={fillColors} />
-          </div>
+          <Body handleBodyClick={handleBodyClick} fillColors={fillColors} />
         </div>
 
         <input type="submit" />
