@@ -16,12 +16,15 @@ export default function Navbar() {
         <>
           <li className="logo">
             <img src={Logo} alt="loho" />
+            {user && <p>Olá {user?.displayName}</p>}
           </li>
+
           {!user && (
             <li>
               <Link to="/login">Entrar</Link>
             </li>
           )}
+
           {user && (
             <li>
               <Link to="/fichas">Fichas</Link>

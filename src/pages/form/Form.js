@@ -1,134 +1,670 @@
-import { useState, useEffect } from "react";
-import { useCollection } from "../../hooks/useCollection";
-import { useAuthContext } from "../../hooks/useAuthContext";
-import { timestamp } from "../../firebase/config";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useHistory } from "react-router";
-import Select from "react-select";
 
-// styles
 import "./Form.css";
+import Body from "./Body";
 
-const categories = [
-  { value: "dores nas costas", label: "dores nas costas" },
-  { value: "mal estar", label: "mal estar" },
-  { value: "diabetes", label: "diabetes" },
-  { value: "dor de cabeca", label: "dor de cabeca" },
-];
-
-export default function Form() {
+export default function Form2() {
   const history = useHistory();
   const { addDocument, response } = useFirestore("fichas");
-  const { user } = useAuthContext();
-  const { documents } = useCollection("users");
-  const [users, setUsers] = useState([]);
+  const [pains, setPains] = useState([]);
+  const [fillColors, setFillColors] = useState({
+    Peito: "none",
+    Perna: "none",
+  });
 
-  // form field values
-  const [name, setName] = useState("");
-  const [details, setDetails] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [category, setCategory] = useState([]);
-  const [assignedUsers, setAssignedUsers] = useState("");
-  const [formError, setFormError] = useState(null);
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // create user values for react-select
-  useEffect(() => {
-    if (documents) {
-      setUsers(
-        documents.map((user) => {
-          return { value: { ...user, id: user.id }, label: user.displayName };
-        })
-      );
-    }
-  }, [documents]);
-
-  const handleSubmit = async (e) => {
+  const handleBodyClick = (e, name) => {
     e.preventDefault();
-    setFormError(null);
 
-    if (category.length < 1) {
-      setFormError("Please select a project category.");
-      return;
-    }
-    if (!assignedUsers) {
-      setFormError("Please assign the project to at least 1 user");
-      return;
-    }
+    setFillColors((prevFillColors) => ({
+      ...prevFillColors,
+      [name]: prevFillColors[name] === "none" ? "green" : "none",
+    }));
 
-    const categoriesList = category.map((c) => c.value);
+    setPains((prevPains) => {
+      const isChecked = !prevPains.includes(name);
 
-    const createdBy = {
-      displayName: user.displayName,
-      id: user.uid,
-    };
+      switch (name) {
+        case "Peito":
+          if (isChecked) {
+            setValue("Pains", [...prevPains, "Peito"]);
 
-    const project = {
-      name,
-      details,
-      assignedUsers: assignedUsers.value,
-      createdBy,
-      categoriesList,
-      dueDate: timestamp.fromDate(new Date(dueDate)),
+            return [...prevPains, "Peito"];
+          } else {
+            setValue(
+              "Pains",
+              prevPains.filter((item) => item !== "Peito")
+            );
+
+            return prevPains.filter((item) => item !== "Peito");
+          }
+
+        case "Perna":
+          if (isChecked) {
+            setValue("Pains", [...prevPains, "Perna"]);
+
+            return [...prevPains, "Perna"];
+          } else {
+            setValue(
+              "Pains",
+              prevPains.filter((item) => item !== "Perna")
+            );
+
+            return prevPains.filter((item) => item !== "Perna");
+          }
+
+        default:
+          return prevPains;
+      }
+    });
+  };
+
+  const onSubmit = async (data) => {
+    const ficha = {
+      nome: data.nome,
+      dadosPessoais: data.dadosPessoais,
+      endereco: data.endereco,
+      indicado: data["Indicado por"],
+      queixa: data["Queixa Principal2"],
+      localdor: pains,
       comments: [],
     };
-
-    await addDocument(project);
+    await addDocument(ficha);
     if (!response.error) {
       history.push("/success");
+    } else {
+      console.log(response.error);
     }
   };
 
+  //console.log(watch("sobrenome")); // watch input value by passing the name of it
+
   return (
+    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+
     <div className="create-form">
       <h2 className="page-title">Criar nova ficha:</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <span>Nome Completo:</span>
-          <input
-            required
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-        </label>
-        <label>
-          <span>Detalhes:</span>
-          <textarea
-            required
-            onChange={(e) => setDetails(e.target.value)}
-            value={details}
-          ></textarea>
-        </label>
-        <label>
-          <span>Data:</span>
-          <input
-            required
-            type="date"
-            onChange={(e) => setDueDate(e.target.value)}
-            value={dueDate}
-          />
-        </label>
-        <label>
-          <span>Categoria:</span>
-          <Select
-            onChange={(option) => setCategory(option)}
-            options={categories}
-            placeholder="Selecionar"
-            isMulti
-          />
-        </label>
-        <label>
-          <span>Paciente:</span>
-          <Select
-            onChange={(option) => setAssignedUsers(option)}
-            options={users}
-            placeholder="Selecionar"
-          />
-        </label>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="secao1">
+          <div className="left-col">Dados Pessoais</div>
+          <div className="right-col">
+            <div className="left-col-1-in">
+              <label>
+                <span> Nome Completo</span>
+                <input type="text" {...register("nome", {})} />
+              </label>
+              <label>
+                <span> Email</span>
+                <input type="email" {...register("dadosPessoais.email", {})} />
+              </label>
+              <label>
+                <span> Telefone</span>
+                <input type="tel" {...register("dadosPessoais.telefone", {})} />
+              </label>
+              <label>
+                <span> CPF</span>
+                <input type="text" {...register("dadosPessoais.CPF", {})} />
+              </label>
+            </div>
+            <div className="right-col-1-in">
+              <label>
+                <span> Data de Nascimento</span>
+                <input
+                  type="date"
+                  {...register("dadosPessoais.aniversario", {})}
+                />
+              </label>
+              <label>
+                <span> Idade</span>
+                <input
+                  type="number"
+                  {...register("dadosPessoais.idade", { min: 0 })}
+                />
+              </label>
+              <label>
+                <span> Ocupação</span>
+                <input
+                  type="text"
+                  {...register("dadosPessoais.ocupação", {})}
+                />
+              </label>
+              <label>
+                <span> Celular</span>
+                <input type="tel" {...register("dadosPessoais.celular", {})} />
+              </label>
+            </div>
+          </div>
+        </div>
 
-        <button className="btn">Adicionar Ficha</button>
+        <div className="secao2">
+          <div className="left-col-2">Endereço</div>
+          <div className="right-col-2">
+            <div className="left-col-2-in">
+              <label>
+                <span> Endereço</span>
+                <input type="text" {...register("endereco.endereco", {})} />
+              </label>
 
-        {formError && <p className="error">{formError}</p>}
+              <label>
+                <span> Cidade</span>
+                <input type="text" {...register("endereco.cidade", {})} />
+              </label>
+              <label>
+                <span> Estado</span>
+                <select {...register("endereco.estado")}>
+                  <option value="SP">SP</option>
+                  <option value="RJ">RJ</option>
+                  <option value="MG">MG</option>
+                  <option value="RS">RS</option>
+                  <option value="BA">BA</option>
+                  <option value="RN">RN</option>
+                </select>
+              </label>
+            </div>
+            <div className="right-col-2-in">
+              <label>
+                <span> CEP</span>
+                <input type="number" {...register("endereco.cep", {})} />
+              </label>
+              <label>
+                <span> Bairro</span>
+                <input type="text" {...register("endereco.bairro", {})} />
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="secao4">
+          <div className="left-col-4">Indicado</div>
+          <div className="right-col-4">
+            <label>
+              <input {...register("Indicado por")} type="radio" value="Amigo" />
+              Amigo
+            </label>
+            <label>
+              <input
+                {...register("Indicado por")}
+                type="radio"
+                value="Familiar"
+              />
+              Familiar
+            </label>
+            <label>
+              <input
+                {...register("Indicado por")}
+                type="radio"
+                value="Internet"
+              />
+              Internet
+            </label>
+            <label>
+              <input {...register("Indicado por")} type="radio" value="TV" />
+              TV
+            </label>
+          </div>
+        </div>
+        <div className="secao3">
+          <div className="left-col-3">Queixa Principal</div>
+          <div className="right-col-2">
+            <textarea {...register("Queixa Principal2", {})} />
+          </div>
+        </div>
+        <div className="secao5">
+          <div className="left-col-5">Dados Médicos</div>
+          <div className="right-col-5">
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  value="Dor de Cabeça"
+                  placeholder="Dor de Cabeça"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                Dor de Cabeça
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  value="Dor nas Costas"
+                  placeholder="Dor nas Costas"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                Dor nas Costas
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  value="Dificuldade de Aprendizado"
+                  placeholder="Dificuldade de Aprendizado"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                Dificuldade de Aprendizado
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="Falta de Concentração"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                Falta de Concentração
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="Diabetes"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                Diabetes
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="Problemas digestivos"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                Problemas digestivos
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="Tontura"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                Tontura
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="8"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                8
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="9"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                9
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="10"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                10
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="11"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                11
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="12"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                12
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="13"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                13
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="14"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                14
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="15"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                15
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="16"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                16
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="17"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                17
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="18"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                18
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="19"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                19
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="20"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                20
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="21"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                21
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="22"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                22
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="23"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                23
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="24"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                24
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="25"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                25
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="26"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                26
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="27"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                27
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="28"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                28
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                29
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                30
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                31
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                32
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                33
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                34
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="35"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                35
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="36"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                36
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="37"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                37
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="38"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                38
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="39"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                39
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="40"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                40
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="41"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                41
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="42"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                42
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="43"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                43
+              </label>
+            </div>
+            <div className="campo">
+              <label>
+                <input
+                  type="checkbox"
+                  placeholder="44"
+                  {...register("Dor", { valueasArray: true })}
+                />
+                44
+              </label>
+            </div>
+          </div>
+        </div>
+        <div className="secao6">
+          <div className="left-col-6">Local da Dor</div>
+          <Body handleBodyClick={handleBodyClick} fillColors={fillColors} />
+        </div>
+
+        <input type="submit" />
       </form>
     </div>
   );

@@ -1,0 +1,149 @@
+.secao1 {
+  border-top: 1px solid rgb(228, 226, 226);
+  display: flex;
+  justify-content: flex-start;
+  align-items: first baseline;
+  gap: 5em;
+}
+
+.right-col {
+  display: flex;
+  gap: 2em;
+  width: 100%;
+}
+
+.left-col-1-in {
+  width: 100%;
+}
+
+.right-col-1-in {
+  width: 100%;
+}
+
+/* ---------------- */
+
+.secao2 {
+  margin-top: 20px;
+  border-top: 1px solid rgb(228, 226, 226);
+  display: flex;
+  justify-content: flex-start;
+  align-items: first baseline;
+  gap: 7em;
+}
+
+.right-col-2 {
+  display: flex;
+  width: 100%;
+  gap: 2em;
+}
+
+.left-col-2-in {
+  width: 100%;
+}
+
+.right-col-2-in {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* ---------------- */
+
+.secao3 {
+  margin-top: 20px;
+  border-top: 1px solid rgb(228, 226, 226);
+  display: flex;
+  justify-content: flex-start;
+  align-items: first baseline;
+  gap: 3em;
+}
+
+.secao4 {
+  margin-top: 20px;
+  border-top: 1px solid rgb(228, 226, 226);
+  display: flex;
+  justify-content: flex-start;
+  align-items: first baseline;
+  gap: 4em;
+}
+
+.left-col-4 {
+  min-width: 66px;
+}
+
+.right-col-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0rem; /* adjust as needed */
+}
+
+.secao5 {
+  margin-top: 20px;
+  border-top: 1px solid rgb(228, 226, 226);
+  display: flex;
+  align-items: first baseline;
+  gap: 3em;
+}
+
+.left-col-5 {
+}
+
+.right-col-5 {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0rem;
+}
+
+.campo {
+  display: inline-block;
+  margin-right: 10px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.campo label {
+  display: inline-block;
+}
+
+.campo input {
+  display: inline-block;
+  width: 15px; /* adjust as needed */
+  margin: 2px;
+}
+
+.right-col-5 label {
+  height: auto;
+  width: auto;
+}
+
+.secao6 {
+  margin-top: 20px;
+  border-top: 1px solid rgb(228, 226, 226);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2em;
+}
+
+.left-col-6 {
+  margin-top: 1em;
+}
+
+.right-col-6 {
+  position: relative;
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  margin: 20px;
+  box-sizing: border-box;
+
+  border-radius: 4px;
+
+  font-size: 16px;
+  resize: none;
+}
