@@ -9,11 +9,11 @@ export default function Fichas({ fichas }) {
       {fichas.length === 0 && <p>Nenhuma ficha</p>}
       {fichas.map((ficha) => (
         <Link to={`/fichas/${ficha.id}`} key={ficha.id}>
-          <h4>{ficha.assignedUsers.displayName}</h4>
-          <p>{ficha.dueDate.toDate().toLocaleDateString("pt-BR")}</p>
+          <h4>{ficha.nome}</h4>
+          <p>{ficha.createdAt.toDate().toLocaleDateString("pt-BR")}</p>
           <div className="assigned-to">
             <ul>
-              {ficha.categoriesList.map((c) => (
+              {ficha.localdor.map((c) => (
                 <li key={c}>{c}</li>
               ))}
             </ul>

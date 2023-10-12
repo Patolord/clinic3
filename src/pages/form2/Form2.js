@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useFirestore } from "../../hooks/useFirestore";
+import { useHistory } from "react-router";
 
 import "./Form2.css";
 import Body from "./Body";
 
 export default function Form2() {
+  const history = useHistory();
+  const { addDocument, response } = useFirestore("fichas");
   const [pains, setPains] = useState([]);
   const [fillColors, setFillColors] = useState({
     Peito: "none",
@@ -64,8 +68,22 @@ export default function Form2() {
     });
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const ficha = {
+      nome: data.nome,
+      dadosPessoais: data.dadosPessoais,
+      endereco: data.endereco,
+      indicado: data["Indicado por"],
+      queixa: data["Queixa Principal2"],
+      localdor: pains,
+      comments: [],
+    };
+    await addDocument(ficha);
+    if (!response.error) {
+      history.push("/success");
+    } else {
+      console.log(response.error);
+    }
   };
 
   //console.log(watch("sobrenome")); // watch input value by passing the name of it
@@ -82,7 +100,7 @@ export default function Form2() {
             <div className="left-col-1-in">
               <label>
                 <span> Nome Completo</span>
-                <input type="text" {...register} />
+                <input type="text" {...register("nome", {})} />
               </label>
               <label>
                 <span> Email</span>

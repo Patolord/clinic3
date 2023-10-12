@@ -24,16 +24,14 @@ function App() {
             <Navbar />
             <Switch>
               <Route exact path="/">
-                {!user && <Redirect to="/form" />}
-                {user && <Form />}
-              </Route>
-              <Route path="/form">
-                {!user && <Redirect to="/login" />}
-                {user && <Form />}
+                {!user && <Redirect to="/form2" />}
+                {user && <Form2 />}
               </Route>
               <Route path="/form2">
-                <Form2 />
+                {!user && <Redirect to="/login" />}
+                {user && <Form2 />}
               </Route>
+
               <Route path="/success">
                 {!user && <Redirect to="/login" />}
                 {user && <Success />}
