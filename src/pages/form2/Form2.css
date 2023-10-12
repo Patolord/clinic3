@@ -3,20 +3,27 @@
   display: flex;
   justify-content: flex-start;
   align-items: first baseline;
-  gap: 7em;
-}
-
-.left-col {
-  min-width: 66px;
+  gap: 5em;
 }
 
 .right-col {
+  display: flex;
+  gap: 2em;
+  width: 100%;
+}
+
+.left-col-1-in {
+  width: 100%;
+}
+
+.right-col-1-in {
   width: 100%;
 }
 
 /* ---------------- */
 
 .secao2 {
+  margin-top: 20px;
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
   justify-content: flex-start;
@@ -47,6 +54,7 @@
 /* ---------------- */
 
 .secao3 {
+  margin-top: 20px;
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
   justify-content: flex-start;
@@ -55,6 +63,7 @@
 }
 
 .secao4 {
+  margin-top: 20px;
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
   justify-content: flex-start;
@@ -73,24 +82,47 @@
 }
 
 .secao5 {
+  margin-top: 20px;
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
-  justify-content: flex-start;
   align-items: first baseline;
-  gap: 7em;
+  gap: 2em;
 }
 
 .left-col-5 {
-  min-width: 66px;
 }
 
 .right-col-5 {
+  margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 0rem; /* adjust as needed */
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0rem;
+}
+
+.campo {
+  display: inline-block;
+  margin-right: 10px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.campo label {
+  display: inline-block;
+}
+
+.campo input {
+  display: inline-block;
+  width: 15px; /* adjust as needed */
+  margin: 2px;
+}
+
+.right-col-5 label {
+  height: auto;
+  width: auto;
 }
 
 .secao6 {
+  margin-top: 20px;
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
   gap: 7em;
@@ -108,22 +140,19 @@
   flex-basis: 100%;
 }
 
-.frente {
+.frente,
+.costas {
   height: 360px;
 }
 
-.items {
-  margin-top: 10px;
-}
+textarea {
+  width: 100%;
+  height: 150px;
+  margin: 20px;
+  box-sizing: border-box;
 
-.svg1 {
-  position: absolute;
-  top: 60px;
-  left: 70px;
-}
+  border-radius: 4px;
 
-.svg1:hover,
-.svg1:focus,
-.svg1:active {
-  fill: red !important;
+  font-size: 16px;
+  resize: none;
 }
