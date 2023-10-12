@@ -31,10 +31,6 @@
   gap: 7em;
 }
 
-.left-col-2 {
-  min-width: 66px;
-}
-
 .right-col-2 {
   display: flex;
   width: 100%;
@@ -42,7 +38,6 @@
 }
 
 .left-col-2-in {
-  min-width: 66px;
   width: 100%;
 }
 
@@ -136,13 +131,8 @@
   position: relative;
   display: flex;
   gap: 2em;
-  align-items: start;
+  align-items: flex-start;
   flex-basis: 100%;
-}
-
-.frente,
-.costas {
-  height: 360px;
 }
 
 textarea {

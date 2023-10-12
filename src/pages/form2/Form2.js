@@ -6,6 +6,10 @@ import Body from "./Body";
 
 export default function Form2() {
   const [pains, setPains] = useState([]);
+  const [fillColors, setFillColors] = useState({
+    Peito: "none",
+    Perna: "none",
+  });
 
   const {
     register,
@@ -14,8 +18,13 @@ export default function Form2() {
     formState: { errors },
   } = useForm();
 
-  const handleBodyClick = (e, name, fillColor) => {
+  const handleBodyClick = (e, name) => {
     e.preventDefault();
+
+    setFillColors((prevFillColors) => ({
+      ...prevFillColors,
+      [name]: prevFillColors[name] === "none" ? "green" : "none",
+    }));
 
     setPains((prevPains) => {
       const isChecked = !prevPains.includes(name);
@@ -95,7 +104,7 @@ export default function Form2() {
                   placeholder="000.000.000-00"
                   {...register("CPF", {})}
                 />
-              </label>{" "}
+              </label>
             </div>
             <div className="right-col-1-in">
               <label>
@@ -638,7 +647,7 @@ export default function Form2() {
         <div className="secao6">
           <div className="left-col-6">Local da Dor</div>
           <div className="right-col-6">
-            <Body handleBodyClick={handleBodyClick} />
+            <Body handleBodyClick={handleBodyClick} fillColors={fillColors} />
           </div>
         </div>
 

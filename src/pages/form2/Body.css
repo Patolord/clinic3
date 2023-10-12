@@ -1,13 +1,18 @@
+.frente,
+.costas {
+  height: 16em;
+}
+
 .svg1 {
   position: absolute;
-  top: 62px;
-  left: 143px;
+  top: 49px;
+  left: 125px;
 }
 
 .svg2 {
   position: absolute;
-  top: 180px;
-  left: 73px;
+  top: 135px;
+  left: 125px;
 }
 
 .items {
