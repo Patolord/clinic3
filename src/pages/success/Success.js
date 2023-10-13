@@ -11,8 +11,3 @@ export default function Success() {
     </div>
   );
 }
-
-<div container>
-  <navbar navbar />
-  <sucess />
-</div>;
