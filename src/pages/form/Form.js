@@ -183,31 +183,16 @@ export default function Form2() {
           </div>
         </div>
         <div className="secao4">
-          <div className="left-col-4">Indicado</div>
+          <div className="left-col-4">Indicação</div>
           <div className="right-col-4">
             <label>
-              <input {...register("Indicado por")} type="radio" value="Amigo" />
-              Amigo
-            </label>
-            <label>
-              <input
-                {...register("Indicado por")}
-                type="radio"
-                value="Familiar"
-              />
-              Familiar
-            </label>
-            <label>
-              <input
-                {...register("Indicado por")}
-                type="radio"
-                value="Internet"
-              />
-              Internet
-            </label>
-            <label>
-              <input {...register("Indicado por")} type="radio" value="TV" />
-              TV
+              <select {...register("dadosPessoais.indicacao")}>
+                <option value="Amigo">Amigo</option>
+                <option value="TV">TV</option>
+                <option value="Familiar">Familiar</option>
+                <option value="Internet">Internet</option>
+              
+              </select>
             </label>
           </div>
         </div>
@@ -228,7 +213,7 @@ export default function Form2() {
                   placeholder="Dor de Cabeça"
                   {...register("Dor", { valueasArray: true })}
                 />
-                Dor de Cabeça
+                Dor de Cabeça / Enxaqueca
               </label>
             </div>
             <div className="campo">
@@ -239,7 +224,7 @@ export default function Form2() {
                   placeholder="Dor nas Costas"
                   {...register("Dor", { valueasArray: true })}
                 />
-                Dor nas Costas
+                Falta de Concentração
               </label>
             </div>
             <div className="campo">
@@ -250,7 +235,7 @@ export default function Form2() {
                   placeholder="Dificuldade de Aprendizado"
                   {...register("Dor", { valueasArray: true })}
                 />
-                Dificuldade de Aprendizado
+                Diabetes
               </label>
             </div>
             <div className="campo">
@@ -260,7 +245,7 @@ export default function Form2() {
                   placeholder="Falta de Concentração"
                   {...register("Dor", { valueasArray: true })}
                 />
-                Falta de Concentração
+                Dor nas Costas
               </label>
             </div>
             <div className="campo">
@@ -270,7 +255,7 @@ export default function Form2() {
                   placeholder="Diabetes"
                   {...register("Dor", { valueasArray: true })}
                 />
-                Diabetes
+                Dificuldade de Aprendizagem
               </label>
             </div>
             <div className="campo">
@@ -280,7 +265,7 @@ export default function Form2() {
                   placeholder="Problemas digestivos"
                   {...register("Dor", { valueasArray: true })}
                 />
-                Problemas digestivos
+                Alergias / Sinusite
               </label>
             </div>
             <div className="campo">
@@ -290,7 +275,7 @@ export default function Form2() {
                   placeholder="Tontura"
                   {...register("Dor", { valueasArray: true })}
                 />
-                Tontura
+                Dor no Pescoço
               </label>
             </div>
             <div className="campo">
@@ -300,7 +285,7 @@ export default function Form2() {
                   placeholder="8"
                   {...register("Dor", { valueasArray: true })}
                 />
-                8
+                Alteração do Humor
               </label>
             </div>
             <div className="campo">
@@ -310,7 +295,7 @@ export default function Form2() {
                   placeholder="9"
                   {...register("Dor", { valueasArray: true })}
                 />
-                9
+                Depressão
               </label>
             </div>
             <div className="campo">
@@ -320,7 +305,7 @@ export default function Form2() {
                   placeholder="10"
                   {...register("Dor", { valueasArray: true })}
                 />
-                10
+                Refluxo
               </label>
             </div>
             <div className="campo">
@@ -330,7 +315,7 @@ export default function Form2() {
                   placeholder="11"
                   {...register("Dor", { valueasArray: true })}
                 />
-                11
+                Infecções de Ouvido
               </label>
             </div>
             <div className="campo">
@@ -340,7 +325,7 @@ export default function Form2() {
                   placeholder="12"
                   {...register("Dor", { valueasArray: true })}
                 />
-                12
+                Insônia / Sono Ruim
               </label>
             </div>
             <div className="campo">
@@ -350,7 +335,7 @@ export default function Form2() {
                   placeholder="13"
                   {...register("Dor", { valueasArray: true })}
                 />
-                13
+                Problemas Intestinais
               </label>
             </div>
             <div className="campo">
@@ -360,7 +345,7 @@ export default function Form2() {
                   placeholder="14"
                   {...register("Dor", { valueasArray: true })}
                 />
-                14
+                Fraturas
               </label>
             </div>
             <div className="campo">
@@ -370,7 +355,7 @@ export default function Form2() {
                   placeholder="15"
                   {...register("Dor", { valueasArray: true })}
                 />
-                15
+                Fadiga
               </label>
             </div>
             <div className="campo">
@@ -380,7 +365,7 @@ export default function Form2() {
                   placeholder="16"
                   {...register("Dor", { valueasArray: true })}
                 />
-                16
+                Problemas Estomacais
               </label>
             </div>
             <div className="campo">
@@ -390,7 +375,7 @@ export default function Form2() {
                   placeholder="17"
                   {...register("Dor", { valueasArray: true })}
                 />
-                17
+                Convulsões / Epilepsia
               </label>
             </div>
             <div className="campo">
@@ -400,7 +385,7 @@ export default function Form2() {
                   placeholder="18"
                   {...register("Dor", { valueasArray: true })}
                 />
-                18
+                Problemas na Tireóide
               </label>
             </div>
             <div className="campo">
@@ -410,7 +395,7 @@ export default function Form2() {
                   placeholder="19"
                   {...register("Dor", { valueasArray: true })}
                 />
-                19
+                Digestão
               </label>
             </div>
             <div className="campo">
@@ -420,7 +405,7 @@ export default function Form2() {
                   placeholder="20"
                   {...register("Dor", { valueasArray: true })}
                 />
-                20
+                Problemas de Pele
               </label>
             </div>
             <div className="campo">
@@ -430,7 +415,7 @@ export default function Form2() {
                   placeholder="21"
                   {...register("Dor", { valueasArray: true })}
                 />
-                21
+                Perda de Peso Recente
               </label>
             </div>
             <div className="campo">
@@ -440,7 +425,7 @@ export default function Form2() {
                   placeholder="22"
                   {...register("Dor", { valueasArray: true })}
                 />
-                22
+                Úlceras
               </label>
             </div>
             <div className="campo">
@@ -450,7 +435,7 @@ export default function Form2() {
                   placeholder="23"
                   {...register("Dor", { valueasArray: true })}
                 />
-                23
+                Câncer
               </label>
             </div>
             <div className="campo">
@@ -460,7 +445,7 @@ export default function Form2() {
                   placeholder="24"
                   {...register("Dor", { valueasArray: true })}
                 />
-                24
+                Stress Excessivo
               </label>
             </div>
             <div className="campo">
@@ -470,7 +455,7 @@ export default function Form2() {
                   placeholder="25"
                   {...register("Dor", { valueasArray: true })}
                 />
-                25
+                Formigamentos
               </label>
             </div>
             <div className="campo">
@@ -480,7 +465,7 @@ export default function Form2() {
                   placeholder="26"
                   {...register("Dor", { valueasArray: true })}
                 />
-                26
+                Gripes / Resfriados
               </label>
             </div>
             <div className="campo">
@@ -490,7 +475,7 @@ export default function Form2() {
                   placeholder="27"
                   {...register("Dor", { valueasArray: true })}
                 />
-                27
+                Doença Cardíaca
               </label>
             </div>
             <div className="campo">
@@ -500,7 +485,7 @@ export default function Form2() {
                   placeholder="28"
                   {...register("Dor", { valueasArray: true })}
                 />
-                28
+                Adormecimentos
               </label>
             </div>
             <div className="campo">
@@ -509,7 +494,7 @@ export default function Form2() {
                   type="checkbox"
                   {...register("Dor", { valueasArray: true })}
                 />
-                29
+                Dor no Maxilar
               </label>
             </div>
             <div className="campo">
@@ -518,7 +503,7 @@ export default function Form2() {
                   type="checkbox"
                   {...register("Dor", { valueasArray: true })}
                 />
-                30
+                Mãos e/ou Pés Frios
               </label>
             </div>
             <div className="campo">
@@ -527,7 +512,7 @@ export default function Form2() {
                   type="checkbox"
                   {...register("Dor", { valueasArray: true })}
                 />
-                31
+                Tortura / Vertigem
               </label>
             </div>
             <div className="campo">
@@ -536,7 +521,7 @@ export default function Form2() {
                   type="checkbox"
                   {...register("Dor", { valueasArray: true })}
                 />
-                32
+                Perda de Audição
               </label>
             </div>
             <div className="campo">
@@ -545,7 +530,7 @@ export default function Form2() {
                   type="checkbox"
                   {...register("Dor", { valueasArray: true })}
                 />
-                33
+                Pressão Alta
               </label>
             </div>
             <div className="campo">
@@ -554,7 +539,7 @@ export default function Form2() {
                   type="checkbox"
                   {...register("Dor", { valueasArray: true })}
                 />
-                34
+                Zumbido
               </label>
             </div>
             <div className="campo">
@@ -564,7 +549,7 @@ export default function Form2() {
                   placeholder="35"
                   {...register("Dor", { valueasArray: true })}
                 />
-                35
+                Visão Embaçada / Dupla
               </label>
             </div>
             <div className="campo">
@@ -574,7 +559,7 @@ export default function Form2() {
                   placeholder="36"
                   {...register("Dor", { valueasArray: true })}
                 />
-                36
+                Derrame Cerebral
               </label>
             </div>
             <div className="campo">
@@ -584,7 +569,7 @@ export default function Form2() {
                   placeholder="37"
                   {...register("Dor", { valueasArray: true })}
                 />
-                37
+                Dor Menstrual / Irregularidade
               </label>
             </div>
             <div className="campo">
@@ -594,7 +579,7 @@ export default function Form2() {
                   placeholder="38"
                   {...register("Dor", { valueasArray: true })}
                 />
-                38
+                Irritabilidade
               </label>
             </div>
             <div className="campo">
@@ -604,7 +589,7 @@ export default function Form2() {
                   placeholder="39"
                   {...register("Dor", { valueasArray: true })}
                 />
-                39
+                Osteopenia
               </label>
             </div>
             <div className="campo">
@@ -614,7 +599,7 @@ export default function Form2() {
                   placeholder="40"
                   {...register("Dor", { valueasArray: true })}
                 />
-                40
+                Perda de Controle da Baxiga
               </label>
             </div>
             <div className="campo">
@@ -624,7 +609,7 @@ export default function Form2() {
                   placeholder="41"
                   {...register("Dor", { valueasArray: true })}
                 />
-                41
+                Problemas de Próstata
               </label>
             </div>
             <div className="campo">
@@ -634,7 +619,7 @@ export default function Form2() {
                   placeholder="42"
                   {...register("Dor", { valueasArray: true })}
                 />
-                42
+                Osteoporose
               </label>
             </div>
             <div className="campo">
@@ -644,7 +629,7 @@ export default function Form2() {
                   placeholder="43"
                   {...register("Dor", { valueasArray: true })}
                 />
-                43
+                Dificuldade de Respirar
               </label>
             </div>
             <div className="campo">
@@ -654,7 +639,7 @@ export default function Form2() {
                   placeholder="44"
                   {...register("Dor", { valueasArray: true })}
                 />
-                44
+                Asma
               </label>
             </div>
           </div>
