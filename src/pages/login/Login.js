@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLogin } from "../../hooks/useLogin";
 
 // styles
@@ -9,9 +9,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { login, error, isPending } = useLogin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    await login(email, password);
   };
 
   return (
