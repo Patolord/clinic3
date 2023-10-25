@@ -7,16 +7,15 @@ import Logo from "../assets/logo.png";
 
 export default function Navbar() {
   const { logout, isPending } = useLogout();
-  const { user, role } = useAuthContext();
+  const { user, displayName, role } = useAuthContext();
 
-  console.log(user);
   return (
     <div className="navbar">
       <ul>
         <>
           <li className="logo">
-            <img src={Logo} alt="loho" />
-            {user && role && <p>{user?.displayName}</p>}
+            <img src={Logo} alt="logo" />
+            {user && <p>Olá {displayName}</p>}
           </li>
 
           {!user && (

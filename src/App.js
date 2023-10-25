@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
-import RoleProtectedRoute from "./components/RoleProtectedRoute";
 
 import "./App.css";
 
@@ -10,9 +9,10 @@ import Login from "./pages/login/Login";
 import Ficha from "./pages/ficha/Ficha";
 import Navbar from "./components/Navbar";
 import Success from "./pages/success/Success";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  const { authIsReady } = useAuthContext();
+  const { authIsReady, user } = useAuthContext();
 
   return (
     <div className="App">
@@ -21,41 +21,39 @@ function App() {
           <div className="container">
             <Navbar />
             <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/" element={user ? <Navigate to="/form" /> : <Navigate to="login" />} />
+              <Route path="/login" element={user ? <Navigate to="/form" /> : <Login />} />
               <Route
-                path="/admin"
+                path="/fichas"
                 element={
-                  <RoleProtectedRoute allowedRoles={["admin"]}>
+                  <ProtectedRoute allowedRoles="admin">
                     <Listings />
-                  </RoleProtectedRoute>
+                  </ProtectedRoute>
                 }
               />
-
               <Route
-                path="/user"
+                path="/form"
                 element={
-                  <RoleProtectedRoute allowedRoles={["user", "admin"]}>
+                  <ProtectedRoute allowedRoles={["user", "admin"]}>
                     <Form />
-                  </RoleProtectedRoute>
+                  </ProtectedRoute>
                 }
               />
-
               <Route
                 path="/success"
                 element={
-                  <RoleProtectedRoute allowedRoles={["user", "admin"]}>
+                  <ProtectedRoute allowedRoles={["user", "admin"]}>
                     <Success />
-                  </RoleProtectedRoute>
+                  </ProtectedRoute>
                 }
               />
 
               <Route
                 path="/fichas/:id"
                 element={
-                  <RoleProtectedRoute allowedRoles={["admin"]}>
+                  <ProtectedRoute allowedRoles="admin">
                     <Ficha />
-                  </RoleProtectedRoute>
+                  </ProtectedRoute>
                 }
               />
             </Routes>

@@ -1,6 +1,5 @@
 import { useCollection } from "../../hooks/useCollection";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useDocument } from "../../hooks/useDocument";
 
 // components
 import Fichas from "../../components/Fichas";

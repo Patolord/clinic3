@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 
 // styles
@@ -22,21 +22,11 @@ export default function Login() {
           <h2>Entrar</h2>
           <label>
             <span>Email:</span>
-            <input
-              required
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
+            <input required type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
           </label>
           <label>
             <span>Senha:</span>
-            <input
-              required
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
+            <input required type="password" onChange={(e) => setPassword(e.target.value)} value={password} />
           </label>
           {!isPending && <button className="btn">Entrar</button>}
           {isPending && (
