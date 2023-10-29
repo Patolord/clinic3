@@ -2,9 +2,25 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import "./Form.css";
 import Body from "./Body";
+
+const schema = yup
+  .object({
+    nome: yup.string().required("Nome é obrigatório").max(100, "Nome muito longo"),
+    dadosPessoais: yup.object({
+      email: yup.string().email("Email inválido"),
+      telefone: yup.string(),
+      CPF: yup.string().length(11, "CPF deve ter 11 dígitos"),
+      idade: yup.number().positive("Idade Invalida").integer("Idade Invalida 2").required("Idade é obrigatória"),
+      ocupação: yup.string(),
+      celular: yup.string(),
+    }),
+  })
+  .required();
 
 export default function Form() {
   const navigate = useNavigate();
@@ -16,12 +32,25 @@ export default function Form() {
   });
 
   const {
+    reset,
     register,
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      dadosPessoais: {
+        email: "",
+        telefone: "",
+        CPF: "",
+        idade: 0,
+        ocupação: "",
+        celular: "",
+      },
+    },
+  });
+  console.log(errors);
   const handleBodyClick = (e, name) => {
     e.preventDefault();
 
@@ -69,20 +98,32 @@ export default function Form() {
   };
 
   const onSubmit = async (data) => {
-    const ficha = {
-      nome: data.nome,
-      dadosPessoais: data.dadosPessoais,
-      endereco: data.endereco,
-      indicado: data["Indicado por"],
-      queixa: data["Queixa Principal2"],
-      localdor: pains,
-      comments: [],
-    };
-    await addDocument(ficha);
-    if (!response.error) {
-      navigate("/success");
-    } else {
-      console.log(response.error, errors);
+    console.log(data);
+    try {
+      const ficha = {
+        nome: data.nome,
+        dadosPessoais: data.dadosPessoais,
+        endereco: data.endereco,
+        indicado: data["Indicado por"],
+        queixa: data["Queixa Principal2"],
+        localdor: pains,
+        comments: [],
+      };
+
+      console.log(ficha);
+      await addDocument(ficha);
+
+      if (!response.error) {
+        reset();
+        setPains([]);
+        navigate("/success");
+      } else {
+        console.log("Error saving document:");
+        // Handle the error appropriately, you might want to show a notification to the user.
+      }
+    } catch (error) {
+      console.log("Submission error:");
+      // Handle the error appropriately, you might want to show a notification to the user.
     }
   };
 
@@ -100,7 +141,7 @@ export default function Form() {
             <div className="left-col-1-in">
               <label>
                 <span> Nome Completo</span>
-                <input type="text" {...register("nome", {})} />
+                <input required type="text" {...register("nome", {})} />
               </label>
               <label>
                 <span> Email</span>
@@ -123,7 +164,9 @@ export default function Form() {
               <label>
                 <span> Idade</span>
                 <input type="number" {...register("dadosPessoais.idade", { min: 0 })} />
+                {errors.dadosPessoais?.idade && <p>{errors.dadosPessoais.idade.message}</p>}
               </label>
+
               <label>
                 <span> Ocupação</span>
                 <input type="text" {...register("dadosPessoais.ocupação", {})} />
