@@ -2,9 +2,6 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useFirestore } from "../../hooks/useFirestore";
 import { useNavigate } from "react-router";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-
 import "./Form.css";
 import Body from "./Body";
 import CheckboxGroup from "./CheckboxGroup";
@@ -14,20 +11,6 @@ export default function Form() {
   const { addDocument, response } = useFirestore("fichas");
   const [pains, setPains] = useState([]);
 
-  const schema = yup
-    .object({
-      nome: yup.string().required("Nome é obrigatório").max(100, "Nome muito longo"),
-      dadosPessoais: yup.object({
-        email: yup.string().email("Email inválido"),
-        telefone: yup.string(),
-        CPF: yup.string().length(11, "CPF deve ter 11 dígitos"),
-        idade: yup.number().positive("Idade Invalida").integer("Idade Invalida 2").required("Idade é obrigatória"),
-        ocupação: yup.string(),
-        celular: yup.string(),
-      }),
-    })
-    .required();
-
   const {
     reset,
     register,
@@ -35,20 +18,7 @@ export default function Form() {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: {
-      dadosPessoais: {
-        email: "",
-        telefone: "",
-        CPF: "",
-        idade: 0,
-        ocupação: "",
-        celular: "",
-      },
-    },
-  });
-  console.log(errors);
+  } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -57,16 +27,17 @@ export default function Form() {
         nome: data.nome,
         dadosPessoais: data.dadosPessoais,
         endereco: data.endereco,
-        indicado: data["Indicado por"],
-        queixa: data["Queixa Principal2"],
+        indicado: data.dadosPessoais?.indicacao || "Amigo",
+        queixa: data["Queixa Principal2"] || "Nenhuma",
         localdor: pains,
         comments: [],
       };
 
-      console.log(ficha);
+      console.log("add", ficha);
       await addDocument(ficha);
 
       if (!response.error) {
+        console.log("Document saved successfully!");
         reset();
         setPains([]);
         navigate("/success");
@@ -78,6 +49,10 @@ export default function Form() {
       console.log("Submission error:");
       // Handle the error appropriately, you might want to show a notification to the user.
     }
+  };
+
+  const handleInput = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, "");
   };
 
   //console.log(watch("sobrenome")); // watch input value by passing the name of it
@@ -98,35 +73,51 @@ export default function Form() {
               </label>
               <label>
                 <span> Email</span>
-                <input type="email" {...register("dadosPessoais.email", {})} />
+                <input required type="email" {...register("dadosPessoais.email", {})} />
               </label>
               <label>
                 <span> Telefone</span>
-                <input type="tel" {...register("dadosPessoais.telefone", {})} />
+                <input required type="tel" {...register("dadosPessoais.telefone", {})} />
               </label>
               <label>
                 <span> CPF</span>
-                <input type="text" {...register("dadosPessoais.CPF", {})} />
+                <input required type="text" {...register("dadosPessoais.CPF", {})} />
               </label>
             </div>
             <div className="right-col-1-in">
               <label>
                 <span> Data de Nascimento</span>
-                <input type="date" {...register("dadosPessoais.aniversario", {})} />
+                <input required type="date" {...register("dadosPessoais.aniversario", {})} />
               </label>
               <label>
-                <span> Idade</span>
-                <input type="number" {...register("dadosPessoais.idade", { min: 0 })} />
+                <span>Idade</span>
+                <input
+                  type="number"
+                  required
+                  {...register("dadosPessoais.idade", {
+                    valueAsNumber: true,
+                    pattern: {
+                      value: /^[0-9]+$/,
+                      message: "Apenas números são permitidos",
+                    },
+                    max: {
+                      value: 200,
+                      message: "Idade Inválida",
+                    },
+                  })}
+                  className="no-arrows"
+                  onInput={handleInput}
+                />
                 {errors.dadosPessoais?.idade && <p>{errors.dadosPessoais.idade.message}</p>}
               </label>
 
               <label>
                 <span> Ocupação</span>
-                <input type="text" {...register("dadosPessoais.ocupação", {})} />
+                <input required type="text" {...register("dadosPessoais.ocupação", {})} />
               </label>
               <label>
                 <span> Celular</span>
-                <input type="tel" {...register("dadosPessoais.celular", {})} />
+                <input required type="tel" {...register("dadosPessoais.celular", {})} />
               </label>
             </div>
           </div>
@@ -173,7 +164,7 @@ export default function Form() {
           <div className="left-col-3">Indicação</div>
           <div className="right-col-3">
             <label>
-              <select {...register("dadosPessoais.indicacao")}>
+              <select required {...register("dadosPessoais.indicacao")}>
                 <option value="Amigo">Amigo</option>
                 <option value="TV">TV</option>
                 <option value="Familiar">Familiar</option>
@@ -185,7 +176,7 @@ export default function Form() {
         <div className="secao4">
           <div className="left-col-3">Queixa Principal</div>
           <div className="right-col-2">
-            <textarea {...register("Queixa Principal2", {})} />
+            <textarea required {...register("Queixa Principal2", {})} />
           </div>
         </div>
         <div className="secao5">
