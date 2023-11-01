@@ -1,9 +1,62 @@
+import { useState } from "react";
+
 import Costas from "../../assets/costas.svg";
 import Frente from "../../assets/frente.svg";
 
 import "./Body.css";
 
-export default function Body({ handleBodyClick, fillColors }) {
+export default function Body({ setPains, setValue }) {
+  const [fillColors, setFillColors] = useState({
+    Peito: "none",
+    Perna: "none",
+  });
+
+  const handleBodyClick = (e, name) => {
+    e.preventDefault();
+
+    setFillColors((prevFillColors) => ({
+      ...prevFillColors,
+      [name]: prevFillColors[name] === "none" ? "green" : "none",
+    }));
+
+    setPains((prevPains) => {
+      const isChecked = !prevPains.includes(name);
+
+      switch (name) {
+        case "Peito":
+          if (isChecked) {
+            setValue("Pains", [...prevPains, "Peito"]);
+
+            return [...prevPains, "Peito"];
+          } else {
+            setValue(
+              "Pains",
+              prevPains.filter((item) => item !== "Peito")
+            );
+
+            return prevPains.filter((item) => item !== "Peito");
+          }
+
+        case "Perna":
+          if (isChecked) {
+            setValue("Pains", [...prevPains, "Perna"]);
+
+            return [...prevPains, "Perna"];
+          } else {
+            setValue(
+              "Pains",
+              prevPains.filter((item) => item !== "Perna")
+            );
+
+            return prevPains.filter((item) => item !== "Perna");
+          }
+
+        default:
+          return prevPains;
+      }
+    });
+  };
+
   return (
     <div className="right-col-6">
       <a

@@ -1,0 +1,16 @@
+.campo {
+  display: inline-block;
+  margin-right: 10px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.campo label {
+  display: inline-block;
+}
+
+.campo input {
+  display: inline-block;
+  width: 15px; /* adjust as needed */
+  margin: 2px;
+}

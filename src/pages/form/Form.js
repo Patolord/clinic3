@@ -7,33 +7,31 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import "./Form.css";
 import Body from "./Body";
-
-const schema = yup
-  .object({
-    nome: yup.string().required("Nome é obrigatório").max(100, "Nome muito longo"),
-    dadosPessoais: yup.object({
-      email: yup.string().email("Email inválido"),
-      telefone: yup.string(),
-      CPF: yup.string().length(11, "CPF deve ter 11 dígitos"),
-      idade: yup.number().positive("Idade Invalida").integer("Idade Invalida 2").required("Idade é obrigatória"),
-      ocupação: yup.string(),
-      celular: yup.string(),
-    }),
-  })
-  .required();
+import CheckboxGroup from "./CheckboxGroup";
 
 export default function Form() {
   const navigate = useNavigate();
   const { addDocument, response } = useFirestore("fichas");
   const [pains, setPains] = useState([]);
-  const [fillColors, setFillColors] = useState({
-    Peito: "none",
-    Perna: "none",
-  });
+
+  const schema = yup
+    .object({
+      nome: yup.string().required("Nome é obrigatório").max(100, "Nome muito longo"),
+      dadosPessoais: yup.object({
+        email: yup.string().email("Email inválido"),
+        telefone: yup.string(),
+        CPF: yup.string().length(11, "CPF deve ter 11 dígitos"),
+        idade: yup.number().positive("Idade Invalida").integer("Idade Invalida 2").required("Idade é obrigatória"),
+        ocupação: yup.string(),
+        celular: yup.string(),
+      }),
+    })
+    .required();
 
   const {
     reset,
     register,
+    control,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -51,51 +49,6 @@ export default function Form() {
     },
   });
   console.log(errors);
-  const handleBodyClick = (e, name) => {
-    e.preventDefault();
-
-    setFillColors((prevFillColors) => ({
-      ...prevFillColors,
-      [name]: prevFillColors[name] === "none" ? "green" : "none",
-    }));
-
-    setPains((prevPains) => {
-      const isChecked = !prevPains.includes(name);
-
-      switch (name) {
-        case "Peito":
-          if (isChecked) {
-            setValue("Pains", [...prevPains, "Peito"]);
-
-            return [...prevPains, "Peito"];
-          } else {
-            setValue(
-              "Pains",
-              prevPains.filter((item) => item !== "Peito")
-            );
-
-            return prevPains.filter((item) => item !== "Peito");
-          }
-
-        case "Perna":
-          if (isChecked) {
-            setValue("Pains", [...prevPains, "Perna"]);
-
-            return [...prevPains, "Perna"];
-          } else {
-            setValue(
-              "Pains",
-              prevPains.filter((item) => item !== "Perna")
-            );
-
-            return prevPains.filter((item) => item !== "Perna");
-          }
-
-        default:
-          return prevPains;
-      }
-    });
-  };
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -216,9 +169,9 @@ export default function Form() {
             </div>
           </div>
         </div>
-        <div className="secao4">
-          <div className="left-col-4">Indicação</div>
-          <div className="right-col-4">
+        <div className="secao3">
+          <div className="left-col-3">Indicação</div>
+          <div className="right-col-3">
             <label>
               <select {...register("dadosPessoais.indicacao")}>
                 <option value="Amigo">Amigo</option>
@@ -229,7 +182,7 @@ export default function Form() {
             </label>
           </div>
         </div>
-        <div className="secao3">
+        <div className="secao4">
           <div className="left-col-3">Queixa Principal</div>
           <div className="right-col-2">
             <textarea {...register("Queixa Principal2", {})} />
@@ -238,298 +191,12 @@ export default function Form() {
         <div className="secao5">
           <div className="left-col-5">Dados Médicos</div>
           <div className="right-col-5">
-            <div className="campo">
-              <label>
-                <input
-                  type="checkbox"
-                  value="Dor de Cabeça"
-                  placeholder="Dor de Cabeça"
-                  {...register("Dor", { valueasArray: true })}
-                />
-                Dor de Cabeça / Enxaqueca
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input
-                  type="checkbox"
-                  value="Dor nas Costas"
-                  placeholder="Dor nas Costas"
-                  {...register("Dor", { valueasArray: true })}
-                />
-                Falta de Concentração
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input
-                  type="checkbox"
-                  value="Dificuldade de Aprendizado"
-                  placeholder="Dificuldade de Aprendizado"
-                  {...register("Dor", { valueasArray: true })}
-                />
-                Diabetes
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input
-                  type="checkbox"
-                  placeholder="Falta de Concentração"
-                  {...register("Dor", { valueasArray: true })}
-                />
-                Dor nas Costas
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="Diabetes" {...register("Dor", { valueasArray: true })} />
-                Dificuldade de Aprendizagem
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input
-                  type="checkbox"
-                  placeholder="Problemas digestivos"
-                  {...register("Dor", { valueasArray: true })}
-                />
-                Alergias / Sinusite
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="Tontura" {...register("Dor", { valueasArray: true })} />
-                Dor no Pescoço
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="8" {...register("Dor", { valueasArray: true })} />
-                Alteração do Humor
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="9" {...register("Dor", { valueasArray: true })} />
-                Depressão
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="10" {...register("Dor", { valueasArray: true })} />
-                Refluxo
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="11" {...register("Dor", { valueasArray: true })} />
-                Infecções de Ouvido
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="12" {...register("Dor", { valueasArray: true })} />
-                Insônia / Sono Ruim
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="13" {...register("Dor", { valueasArray: true })} />
-                Problemas Intestinais
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="14" {...register("Dor", { valueasArray: true })} />
-                Fraturas
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="15" {...register("Dor", { valueasArray: true })} />
-                Fadiga
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="16" {...register("Dor", { valueasArray: true })} />
-                Problemas Estomacais
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="17" {...register("Dor", { valueasArray: true })} />
-                Convulsões / Epilepsia
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="18" {...register("Dor", { valueasArray: true })} />
-                Problemas na Tireóide
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="19" {...register("Dor", { valueasArray: true })} />
-                Digestão
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="20" {...register("Dor", { valueasArray: true })} />
-                Problemas de Pele
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="21" {...register("Dor", { valueasArray: true })} />
-                Perda de Peso Recente
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="22" {...register("Dor", { valueasArray: true })} />
-                Úlceras
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="23" {...register("Dor", { valueasArray: true })} />
-                Câncer
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="24" {...register("Dor", { valueasArray: true })} />
-                Stress Excessivo
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="25" {...register("Dor", { valueasArray: true })} />
-                Formigamentos
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="26" {...register("Dor", { valueasArray: true })} />
-                Gripes / Resfriados
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="27" {...register("Dor", { valueasArray: true })} />
-                Doença Cardíaca
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="28" {...register("Dor", { valueasArray: true })} />
-                Adormecimentos
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" {...register("Dor", { valueasArray: true })} />
-                Dor no Maxilar
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" {...register("Dor", { valueasArray: true })} />
-                Mãos e/ou Pés Frios
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" {...register("Dor", { valueasArray: true })} />
-                Tortura / Vertigem
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" {...register("Dor", { valueasArray: true })} />
-                Perda de Audição
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" {...register("Dor", { valueasArray: true })} />
-                Pressão Alta
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" {...register("Dor", { valueasArray: true })} />
-                Zumbido
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="35" {...register("Dor", { valueasArray: true })} />
-                Visão Embaçada / Dupla
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="36" {...register("Dor", { valueasArray: true })} />
-                Derrame Cerebral
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="37" {...register("Dor", { valueasArray: true })} />
-                Dor Menstrual / Irregularidade
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="38" {...register("Dor", { valueasArray: true })} />
-                Irritabilidade
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="39" {...register("Dor", { valueasArray: true })} />
-                Osteopenia
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="40" {...register("Dor", { valueasArray: true })} />
-                Perda de Controle da Baxiga
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="41" {...register("Dor", { valueasArray: true })} />
-                Problemas de Próstata
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="42" {...register("Dor", { valueasArray: true })} />
-                Osteoporose
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="43" {...register("Dor", { valueasArray: true })} />
-                Dificuldade de Respirar
-              </label>
-            </div>
-            <div className="campo">
-              <label>
-                <input type="checkbox" placeholder="44" {...register("Dor", { valueasArray: true })} />
-                Asma
-              </label>
-            </div>
+            <CheckboxGroup control={control} name="Queixas" />
           </div>
         </div>
         <div className="secao6">
           <div className="left-col-6">Local da Dor</div>
-          <Body handleBodyClick={handleBodyClick} fillColors={fillColors} />
+          <Body setValue={setValue} setPains={setPains} />
         </div>
 
         <input type="submit" />
