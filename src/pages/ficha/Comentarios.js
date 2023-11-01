@@ -5,7 +5,7 @@ import { useFirestore } from "../../hooks/useFirestore";
 //import { formatDistanceToNow } from "date-fns";
 
 export default function Comentarios({ ficha }) {
-  const { user } = useAuthContext();
+  const { displayName } = useAuthContext();
   const [newComment, setNewComment] = useState("");
   const { updateDocument, response } = useFirestore("fichas");
 
@@ -13,7 +13,7 @@ export default function Comentarios({ ficha }) {
     e.preventDefault();
 
     const commentToAdd = {
-      displayName: user.displayName,
+      displayName: displayName,
       content: newComment,
       createdAt: timestamp.fromDate(new Date()),
       id: Math.random(),
@@ -50,11 +50,7 @@ export default function Comentarios({ ficha }) {
       <form className="add-comment" onSubmit={handleSubmit}>
         <label>
           <span>Adicionar novo comentário:</span>
-          <textarea
-            required
-            onChange={(e) => setNewComment(e.target.value)}
-            value={newComment}
-          ></textarea>
+          <textarea required onChange={(e) => setNewComment(e.target.value)} value={newComment}></textarea>
         </label>
         <button className="btn">Comentar</button>
       </form>
