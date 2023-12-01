@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext";
 
-//styles
 import "./App.css";
 
 import Listings from "./pages/listings/Listings";
@@ -10,6 +9,7 @@ import Login from "./pages/login/Login";
 import Ficha from "./pages/ficha/Ficha";
 import Navbar from "./components/Navbar";
 import Success from "./pages/success/Success";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -21,29 +21,40 @@ function App() {
           <div className="container">
             <Navbar />
             <Routes>
+              <Route path="/" element={user ? <Navigate to="/form" /> : <Navigate to="login" />} />
+              <Route path="/login" element={user ? <Navigate to="/form" /> : <Login />} />
               <Route
-                path="/"
-                element={user ? <Form /> : <Navigate to="/login" />}
+                path="/fichas"
+                element={
+                  <ProtectedRoute allowedRoles="admin">
+                    <Listings />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/form"
-                element={user ? <Form /> : <Navigate to="/login" />}
+                element={
+                  <ProtectedRoute allowedRoles={["user", "admin"]}>
+                    <Form />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/success"
-                element={user ? <Success /> : <Navigate to="/login" />}
+                element={
+                  <ProtectedRoute allowedRoles={["user", "admin"]}>
+                    <Success />
+                  </ProtectedRoute>
+                }
               />
-              <Route
-                path="/fichas"
-                element={user ? <Listings /> : <Navigate to="/login" />}
-              />
+
               <Route
                 path="/fichas/:id"
-                element={user ? <Ficha /> : <Navigate to="/login" />}
-              />
-              <Route
-                path="/login"
-                element={user ? <Navigate to="/form" /> : <Login />}
+                element={
+                  <ProtectedRoute allowedRoles="admin">
+                    <Ficha />
+                  </ProtectedRoute>
+                }
               />
             </Routes>
           </div>
@@ -54,41 +65,3 @@ function App() {
 }
 
 export default App;
-
-/*
-ESTRUTURA
-<div App">
-      {authIsReady && (
-        <BrowserRouter>
-    <div container">
-            <Navbar />
-            <Routes>
-              <Route exact path="/">
-                {!user && <Redirect to="/login" />}
-                {user && <Listings />}
-              </Route>
-              <Route path="/form">
-                {!user && <Redirect to="/login" />}
-                {user && <Form />}
-              </Route>
-              <Route path="/fichas/:id">
-                {!user && <Redirect to="/login" />}
-                {user && <Ficha />}
-              </Route>
-              <Route path="/login">
-                {user && <Redirect to="/" />}
-                {!user && <Login />}
-              </Route>
-              MUDAR PARA CADASTRAR ALGO <Route path="/signup">
-                {user && <Redirect to="/" />}
-                {!user && <Signup />}
-              </Route>
-            </Routes>
-          </div>
-          {user && <AllUsers />}
-        </BrowserRouter>
-      )}
-    </div>
-
-
-*/

@@ -66,6 +66,7 @@ export const useFirestore = (collection) => {
         payload: addedDocument,
       });
     } catch (err) {
+      console.error("Error adding document:", err);
       dispatchIfNotCancelled({ type: "ERROR", payload: err.message });
     }
   };

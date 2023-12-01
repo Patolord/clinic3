@@ -1,9 +1,10 @@
 import { useCollection } from "../../hooks/useCollection";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useDocument } from "../../hooks/useDocument";
+import { useState } from "react";
 
 // components
 import Fichas from "../../components/Fichas";
+import Search from "./Search";
 
 // styles
 import "./Listings.css";
@@ -11,22 +12,26 @@ import "./Listings.css";
 export default function Listings() {
   const { documents, error } = useCollection("fichas");
   const { user } = useAuthContext();
-  const { document: document2, error: error2 } = useDocument(
-    "users",
-    user?.uid
-  );
+  const [searchTerm, setSearchTerm] = useState("");
 
   console.log(user.uid);
   console.log(user);
-  console.log(document2?.form);
+
+  const filteredDocuments = documents?.filter((document) => {
+    // Assuming 'title' is the field you want to search by. Adjust as needed. <input type="text" placeholder="Pesquisar" onChange={handleSearch} />
+    return document.nome.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div>
-      <h2 className="page-title">Fichas</h2>
-
-      {error && <p className="error">{error}</p>}
-      {error2 && <p className="error">{error2}</p>}
-      {document2?.form && documents && <Fichas fichas={documents} />}
+      <div className="search">
+        <h2 className="page-title">Fichas cadastradas</h2>
+        <Search onSearch={setSearchTerm} />
+      </div>
+      <div>
+        {error && <p className="error">{error}</p>}
+        {filteredDocuments && <Fichas fichas={filteredDocuments} />}
+      </div>
     </div>
   );
 }

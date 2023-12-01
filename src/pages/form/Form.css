@@ -48,7 +48,7 @@
 
 /* ---------------- */
 
-.secao3 {
+.secao3 .secao4 {
   margin-top: 20px;
   border-top: 1px solid rgb(228, 226, 226);
   display: flex;
@@ -57,20 +57,11 @@
   gap: 3em;
 }
 
-.secao4 {
-  margin-top: 20px;
-  border-top: 1px solid rgb(228, 226, 226);
-  display: flex;
-  justify-content: flex-start;
-  align-items: first baseline;
-  gap: 4em;
-}
-
-.left-col-4 {
+.left-col-3 {
   min-width: 66px;
 }
 
-.right-col-4 {
+.right-col-3 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 0rem; /* adjust as needed */
@@ -84,31 +75,11 @@
   gap: 3em;
 }
 
-.left-col-5 {
-}
-
 .right-col-5 {
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 0rem;
-}
-
-.campo {
-  display: inline-block;
-  margin-right: 10px;
-  white-space: nowrap;
-  font-size: 16px;
-}
-
-.campo label {
-  display: inline-block;
-}
-
-.campo input {
-  display: inline-block;
-  width: 15px; /* adjust as needed */
-  margin: 2px;
 }
 
 .right-col-5 label {
@@ -146,4 +117,14 @@ textarea {
 
   font-size: 16px;
   resize: none;
+}
+
+.no-arrows::-webkit-inner-spin-button,
+.no-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-arrows {
+  -moz-appearance: textfield;
 }

@@ -9,9 +9,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const { login, error, isPending } = useLogin();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    await login(email, password);
   };
 
   return (
@@ -22,21 +22,11 @@ export default function Login() {
           <h2>Entrar</h2>
           <label>
             <span>Email:</span>
-            <input
-              required
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-            />
+            <input required type="email" onChange={(e) => setEmail(e.target.value)} value={email} />
           </label>
           <label>
             <span>Senha:</span>
-            <input
-              required
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-            />
+            <input required type="password" onChange={(e) => setPassword(e.target.value)} value={password} />
           </label>
           {!isPending && <button className="btn">Entrar</button>}
           {isPending && (
