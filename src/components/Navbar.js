@@ -29,6 +29,10 @@ export default function Navbar() {
               <Link to="/fichas">Fichas</Link>
             </li>
           )}
+
+          <li>
+            <Link to="/form">Formulário</Link>
+          </li>
         </>
 
         {user && (
